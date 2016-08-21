@@ -1,5 +1,5 @@
 {
-  "name": "scandir",
+  "name": "sb-scandir",
   "version": "0.0.0",
   "description": "File scanning module for Node.js",
   "main": "lib/index.js",
