@@ -29,14 +29,14 @@ async function scanDirectory(path: string, recursive: 0 | 1 | 2, validate: ((pat
   }, [])
 }
 
-module.exports = function(path: string, givenRecursive: boolean = true, givenValidate: ?((path: string) => boolean) = null) {
+module.exports = async function(path: string, givenRecursive: boolean = true, givenValidate: ?((path: string) => boolean) = null) {
   invariant(path && typeof path === 'string', 'path must be a valid string')
-  invariant(!givenValidate || typeof givenValidate === 'function', 'givenValidate must be a valid function')
+  invariant(!givenValidate || typeof givenValidate === 'function', 'validate must be a valid function')
 
   const recursive = !!givenRecursive
   const validate = givenValidate || function(itemPath) {
     return Path.basename(itemPath).substr(0, 1) !== '.'
   }
 
-  return scanDirectory(path, recursive ? 2 : 1, validate)
+  return await scanDirectory(path, recursive ? 2 : 1, validate)
 }
