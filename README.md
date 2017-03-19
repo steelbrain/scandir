@@ -1,5 +1,7 @@
 # ScanDir
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/steelbrain/scandir.svg)](https://greenkeeper.io/)
+
 `sb-scandir` is a node module that supports simple file scanning with some sugar features.
 
 ## Installation

@@ -12,12 +12,12 @@
   "devDependencies": {
     "babel-cli": "^6.11.4",
     "babel-preset-steelbrain": "^5.0.0",
-    "eslint-config-steelbrain": "^1.0.4",
+    "eslint-config-steelbrain": "^2.0.0",
     "flow-bin": "^0.42.0",
     "jasmine-fix": "^1.0.1"
   },
   "dependencies": {
-    "sb-promisify": "^1.3.0"
+    "sb-promisify": "^2.0.1"
   },
   "repository": {
     "type": "git",
