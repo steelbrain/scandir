@@ -14,30 +14,30 @@ describe('scandir', function() {
   }
 
   it('throws an error if path is invalid', async function() {
-    expectToThrow(async function() {
+    await expectToThrow(async function() {
       await scandir()
     }, 'path must be a valid string')
-    expectToThrow(async function() {
+    await expectToThrow(async function() {
       await scandir(null)
     }, 'path must be a valid string')
-    expectToThrow(async function() {
+    await expectToThrow(async function() {
       await scandir({})
     }, 'path must be a valid string')
-    expectToThrow(async function() {
+    await expectToThrow(async function() {
       await scandir(function() {})
     }, 'path must be a valid string')
-    expectToThrow(async function() {
+    await expectToThrow(async function() {
       await scandir(NaN)
     }, 'path must be a valid string')
   })
   it('throws if validate is invalid', async function() {
-    expectToThrow(async function() {
+    await expectToThrow(async function() {
       await scandir(__dirname, false, true)
     }, 'validate must be a valid function')
-    expectToThrow(async function() {
+    await expectToThrow(async function() {
       await scandir(__dirname, false, 'asd')
     }, 'validate must be a valid function')
-    expectToThrow(async function() {
+    await expectToThrow(async function() {
       await scandir(__dirname, false, {})
     }, 'validate must be a valid function')
   })
