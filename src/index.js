@@ -38,5 +38,5 @@ module.exports = async function(path: string, givenRecursive: boolean = true, gi
     return Path.basename(itemPath).substr(0, 1) !== '.'
   }
 
-  return await scanDirectory(path, recursive ? 2 : 1, validate)
+  return scanDirectory(path, recursive ? 2 : 1, validate)
 }
