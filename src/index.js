@@ -15,7 +15,7 @@ async function scanDirectoryInternal(path: string, recursive: 0 | 1 | 2, validat
   const itemStat = await stat(path)
   if (itemStat.isFile()) {
     result.files.push(path)
-  } else if (itemStat.isDirectory()) {
+  } else if (itemStat.isDirectory() && recursive !== 0) {
     result.directories.push(path)
   }
   if (!itemStat.isDirectory() || recursive === 0) {
