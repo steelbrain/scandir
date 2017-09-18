@@ -43,25 +43,30 @@ describe('scandir', function() {
   })
   it('properly scans the given directory', async function() {
     const results = await scandir(getFixturePath('normal'))
-    expect(results).toEqual([getFixturePath('normal/a'), getFixturePath('normal/b')])
+    expect(results.files).toEqual([getFixturePath('normal/a'), getFixturePath('normal/b')])
+    expect(results.directories).toEqual([getFixturePath('normal')])
   })
   it('ignores dot files by default', async function() {
     const results = await scandir(getFixturePath('ignore-default'))
-    expect(results).toEqual([getFixturePath('ignore-default/a'), getFixturePath('ignore-default/c')])
+    expect(results.files).toEqual([getFixturePath('ignore-default/a'), getFixturePath('ignore-default/c')])
+    expect(results.directories).toEqual([getFixturePath('ignore-default')])
   })
   it('recurses when we tell it to', async function() {
     const results = await scandir(getFixturePath('recursive'))
-    expect(results).toEqual([getFixturePath('recursive/a'), getFixturePath('recursive/b/c')])
+    expect(results.files).toEqual([getFixturePath('recursive/a'), getFixturePath('recursive/b/c')])
+    expect(results.directories).toEqual([getFixturePath('recursive'), getFixturePath('recursive/b')])
   })
   it('does not recurse when we tell it to', async function() {
     const results = await scandir(getFixturePath('recursive'), false)
-    expect(results).toEqual([getFixturePath('recursive/a')])
+    expect(results.files).toEqual([getFixturePath('recursive/a')])
+    expect(results.directories).toEqual([getFixturePath('recursive')])
   })
   it('has a working validate method', async function() {
     const results = await scandir(getFixturePath('validate'), true, function(path) {
       const baseName = Path.basename(path)
       return baseName !== 'd' && baseName !== 'g'
     })
-    expect(results).toEqual([getFixturePath('validate/a'), getFixturePath('validate/b/c'), getFixturePath('validate/b/e/f')])
+    expect(results.files).toEqual([getFixturePath('validate/a'), getFixturePath('validate/b/c'), getFixturePath('validate/b/e/f')])
+    expect(results.directories).toEqual([getFixturePath('validate'), getFixturePath('validate/b'), getFixturePath('validate/b/e')])
   })
 })
