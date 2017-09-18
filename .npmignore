@@ -4,3 +4,4 @@ spec/
 src/
 *.DS_Store
 decls
+.flowconfig
