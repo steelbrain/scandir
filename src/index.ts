@@ -58,6 +58,7 @@ async function scanDirectoryInternal({
   result,
   fileSystem,
   queue,
+  reject,
 }: {
   path: string
   recursive: Recursive
@@ -65,6 +66,7 @@ async function scanDirectoryInternal({
   result: Result
   fileSystem: FileSystem
   queue: PromiseQueue
+  reject: (err: Error) => void
 }): Promise<void> {
   const itemStat = await fileSystem.stat(path)
   if (itemStat.isFile()) {
@@ -78,24 +80,27 @@ async function scanDirectoryInternal({
   }
 
   const contents = await fileSystem.readdir(path)
-  await Promise.all(
-    contents.map(async item => {
-      const itemPath = fileSystem.join(path, item)
+  contents.forEach(item => {
+    const itemPath = fileSystem.join(path, item)
 
-      if (validate(itemPath)) {
-        await queue.add(async () =>
-          scanDirectoryInternal({
-            path: itemPath,
-            recursive: recursive === 'shallow' ? 'none' : 'deep',
-            validate,
-            result,
-            fileSystem,
-            queue,
-          }),
-        )
-      }
-    }),
-  )
+    if (!validate(itemPath)) {
+      return
+    }
+
+    queue
+      .add(() =>
+        scanDirectoryInternal({
+          path: itemPath,
+          recursive: recursive === 'shallow' ? 'none' : 'deep',
+          validate,
+          result,
+          fileSystem,
+          queue,
+          reject,
+        }),
+      )
+      .catch(reject)
+  })
 }
 
 async function scanDirectory(
@@ -110,7 +115,7 @@ async function scanDirectory(
     validate?: Validate | null
     concurrency?: number
     fileSystem?: Partial<FileSystem>
-  },
+  } = {},
 ): Promise<Result> {
   invariant(path && typeof path === 'string', 'path must be a valid string')
   invariant(typeof recursive === 'boolean', 'options.recursive must be a valid boolean')
@@ -121,16 +126,22 @@ async function scanDirectory(
   const queue = new PromiseQueue({
     concurrency,
   })
+
   const result = { files: [], directories: [] }
   const mergedFileSystem = { ...defaultFilesystem, ...fileSystem }
 
-  await scanDirectoryInternal({
-    path,
-    recursive: recursive ? 'deep' : 'shallow',
-    validate: validate != null ? validate : item => mergedFileSystem.basename(item).slice(0, 1) !== '.',
-    result,
-    fileSystem: mergedFileSystem,
-    queue,
+  await new Promise((resolve, reject) => {
+    scanDirectoryInternal({
+      path,
+      recursive: recursive ? 'deep' : 'shallow',
+      validate: validate != null ? validate : item => mergedFileSystem.basename(item).slice(0, 1) !== '.',
+      result,
+      fileSystem: mergedFileSystem,
+      queue,
+      reject,
+    })
+      .then(() => queue.waitTillIdle())
+      .then(resolve, reject)
   })
 
   return result
