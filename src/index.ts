@@ -17,8 +17,8 @@ interface FileSystem {
   readdir(path: string): Promise<string[]>
 }
 
-type Recursive = 'shallow' | 'deep' | 'none'
 type Validate = (path: string) => boolean
+type Recursive = 'shallow' | 'deep' | 'none'
 
 export const defaultFilesystem: FileSystem = {
   join(pathA, pathB) {
