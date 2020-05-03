@@ -47,9 +47,9 @@ export default async function scanDirectory(
 
 ```js
 import Path from 'path'
-import scandir from 'sb-scandir'
+import scandir, { defaultFilesystem } from 'sb-scandir'
 // or
-const { default: scandir } = require('sb-scandir')
+const { default: scandir, defaultFilesystem } = require('sb-scandir')
 
 // Scan all files except the dot ones
 scandir(__dirname).then(function(result) {
