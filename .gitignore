@@ -1,4 +1,5 @@
-.idea/
+.idea
 node_modules
+*.log
 /lib
-*.DS_Store
+.DS_Store
