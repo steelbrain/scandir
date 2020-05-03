@@ -25,6 +25,8 @@ interface FileSystem {
 
 type Validate = (path: string) => boolean
 
+export const defaultFilesystem: FileSystem;
+
 export default async function scanDirectory(
   path: string,
   {
@@ -46,6 +48,8 @@ export default async function scanDirectory(
 ```js
 import Path from 'path'
 import scandir from 'sb-scandir'
+// or
+const { default: scandir } = require('sb-scandir')
 
 // Scan all files except the dot ones
 scandir(__dirname).then(function(result) {
