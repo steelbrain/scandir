@@ -80,7 +80,7 @@ async function scanDirectoryInternal({
   }
 
   const contents = await fileSystem.readdir(path)
-  contents.forEach(item => {
+  contents.forEach((item) => {
     const itemPath = fileSystem.join(path, item)
 
     if (!validate(itemPath)) {
@@ -134,7 +134,7 @@ async function scanDirectory(
     scanDirectoryInternal({
       path,
       recursive: recursive ? 'deep' : 'shallow',
-      validate: validate != null ? validate : item => mergedFileSystem.basename(item).slice(0, 1) !== '.',
+      validate: validate != null ? validate : (item) => mergedFileSystem.basename(item).slice(0, 1) !== '.',
       result,
       fileSystem: mergedFileSystem,
       queue,

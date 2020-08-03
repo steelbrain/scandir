@@ -1,3 +1,7 @@
+#### 3.1.0
+
+- Add support for Node.js ESM loader
+
 #### 3.0.0
 
 - Add ESM `module` for bundlers
