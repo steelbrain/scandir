@@ -1,3 +1,7 @@
+#### 3.1.1
+
+- Fix Typescript typings not loading with newer TS versions
+
 #### 3.1.0
 
 - Add support for Node.js ESM loader
