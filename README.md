@@ -1,11 +1,11 @@
 # ScanDir
 
-`sb-scandir` is a node module that supports simple file scanning with some sugar features.
+`@steelbrain/scan-dir` (formerly `sb-scandir`) is a node module that supports simple file scanning with some sugar features.
 
 ## Installation
 
 ```
-npm install --save sb-scandir
+npm install --save @steelbrain/scan-dir
 ```
 
 ## API
@@ -47,9 +47,9 @@ export default async function scanDirectory(
 
 ```js
 import Path from 'path'
-import scandir, { defaultFilesystem } from 'sb-scandir'
+import scandir, { defaultFilesystem } from '@steelbrain/scan-dir'
 // or
-const { default: scandir, defaultFilesystem } = require('sb-scandir')
+const { default: scandir, defaultFilesystem } = require('@steelbrain/scan-dir')
 
 // Scan all files except the dot ones
 scandir(__dirname).then(function(result) {

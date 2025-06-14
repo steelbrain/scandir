@@ -1,3 +1,7 @@
+#### 4.0.0
+
+- No API changes besides rename from `sb-scandir` to `@steelbrain/scan-dir`
+
 #### 3.1.1
 
 - Fix Typescript typings not loading with newer TS versions
